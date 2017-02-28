@@ -1,6 +1,6 @@
 package wwtao.demo.demo_activityrouter;
 
-import com.chenenyu.router.Router;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import android.app.Application;
 
@@ -12,6 +12,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Router.initialize(this);
+        //初始化路由
+        ARouter.init(this);
     }
 }

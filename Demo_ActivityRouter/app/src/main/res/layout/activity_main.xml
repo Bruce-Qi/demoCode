@@ -18,7 +18,7 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="目标地址"
+                android:hint="activity地址:"
         />
         <EditText
                 android:id="@+id/mainActivityEtRequestCode"
@@ -32,46 +32,46 @@
     </LinearLayout>
 
     <Button
-            android:id="@+id/mainActivityBtnGotoCustom"
+            android:id="@+id/btnMainActivityGotoCustomActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
     />
 
     <Button
-            android:id="@+id/mainActivityBtnGotoCustomForResult"
+            android:id="@+id/btnMainActivityGotoCustomActivityForResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
     />
 
     <Button
-            android:id="@+id/mainActivityBtnGotoBaiDu"
+            android:id="@+id/btnMainActivityGotoBaiDu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="跳转百度网页"
     />
     <Button
-            android:id="@+id/mainActivityBtnGonfig"
+            android:id="@+id/btnMainActivityGotoHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="跳转代码配置界面"
+            android:text="跳转Home"
     />
     <Button
-            android:id="@+id/mainActivityBtnGotoOriginImplicit"
+            android:id="@+id/btnMainActivityGotoGoodsDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="原生跳转intent-filter"
+            android:text="跳转商品详情"
     />
 
     <Button
-            android:id="@+id/mainActivityBtnGotoImplicit"
+            android:id="@+id/btnMainActivityGotoLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="带参数跳转intent-filter"
+            android:text="去登录"
     />
 
 

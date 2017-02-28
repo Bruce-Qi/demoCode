@@ -1,40 +1,49 @@
 package wwtao.demo.demo_activityrouter;
 
-import com.chenenyu.router.RouteCallback;
-import com.chenenyu.router.Router;
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import wwtao.demo.demo_activityrouter.activities.ActivityF;
+import rx.functions.Action1;
+import wwtao.demo.demo_activityrouter.activities.GoodsDetail;
+import wwtao.demo.demo_activityrouter.activities.Orders;
+import wwtao.demo.demo_activityrouter.utils.CustomToast;
 
 
 public class MainActivity extends AppCompatActivity {
+    @Autowired(name = "/mall/utils/toast/normal")
+    CustomToast customToast;
+
     @BindView(R.id.mainActivityEt)
-    EditText etAddress;
+    EditText etTargetAddress;
     @BindView(R.id.mainActivityEtRequestCode)
     EditText etRequestCode;
 
-    @BindView(R.id.mainActivityBtnGotoCustom)
-    Button btnGotoCustom;
-    @BindView(R.id.mainActivityBtnGotoCustomForResult)
-    Button btnGotoCustomForResult;
-    @BindView(R.id.mainActivityBtnGotoBaiDu)
-    Button btnGotoBaidu;
-    @BindView(R.id.mainActivityBtnGonfig)
-    Button btnGotoConfig;
-    @BindView(R.id.mainActivityBtnGotoOriginImplicit)
-    Button btnGotoOriginImplicit;
-    @BindView(R.id.mainActivityBtnGotoImplicit)
-    Button btnGotoImplicit;
+    @BindView(R.id.btnMainActivityGotoCustomActivity)
+    Button btnGotoCustomActivity;
+    @BindView(R.id.btnMainActivityGotoCustomActivityForResult)
+    Button btnGotoCustomActivityForResult;
+    @BindView(R.id.btnMainActivityGotoBaiDu)
+    Button btnGotoBaiDu;
+    @BindView(R.id.btnMainActivityGotoHome)
+    Button btnGotoHome;
+    @BindView(R.id.btnMainActivityGotoGoodsDetail)
+    Button btnGotoGoodsDetail;
+    @BindView(R.id.btnMainActivityGotoLogin)
+    Button btnGotoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,32 +51,63 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        RxTextView.textChanges(etAddress).subscribe(charSequence -> {
-            btnGotoCustom.setText(String.format("startActivity:%s", etAddress.getText().toString()));
-            btnGotoCustomForResult.setText(String.format("startActivityFroResult:%s", etAddress.getText().toString()));
+        RxTextView.textChanges(etTargetAddress).subscribe(new Action1<CharSequence>() {
+            @Override
+            public void call(CharSequence charSequence) {
+                btnGotoCustomActivity.setText(String.format("start Activity: %s", etTargetAddress.getText()
+                        .toString()));
+                btnGotoCustomActivityForResult.setText(String.format("start Activity for result: %s"
+                        , etTargetAddress.getText().toString()));
+
+            }
         });
-        btnGotoCustom.setOnClickListener(v -> Router.build(etAddress.getText().toString())
-                .callback(mRouteCallback).go(this));
-
-        btnGotoCustomForResult.setOnClickListener(v -> {
-            Router.build(etAddress.getText().toString())
-                    .callback(mRouteCallback)
-                    .requestCode(Integer.valueOf(etRequestCode.getText().toString())).go(this);
-//            Intent intent = new Intent();
-//            intent.setClass(this, ActivityA.class);
-//            startActivity(intent);
+        btnGotoCustomActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build(etTargetAddress.getText().toString()).navigation();
+            }
         });
 
-        btnGotoBaidu.setOnClickListener(v -> Router.build("http://www.baidu.com").callback(mRouteCallback).go(this));
+        btnGotoCustomActivityForResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(etTargetAddress.getText().toString())
+                        .navigation(MainActivity.this, Integer.valueOf(etRequestCode.getText().toString()),
+                                mRouteCallback);
+            }
+        });
 
-        Router.addRouteTable(map -> map.put("configRoute", ActivityF.class));
-        btnGotoConfig.setOnClickListener(v -> Router.build("configRoute").go(this));
+        btnGotoBaiDu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("http://www.baidu.com").navigation();
+            }
+        });
 
-        btnGotoOriginImplicit.setOnClickListener(v ->
-                Router.build("wwtao://implicit1?arg1=value1&arg2=value2&arg3=value3").go(this));
+        btnGotoHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/mall/home").withString("modelName", "goodsList").navigation();
+            }
+        });
 
-        btnGotoImplicit.setOnClickListener(v -> Router.build("wwtao://implicit2?arg1=value1&arg2=value2&arg3=value3")
-                .go(this));
+        btnGotoGoodsDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/mall/goodsDetail")
+                        .navigation(MainActivity.this, GoodsDetail.OPEN_SOURCE_MAIN, mRouteCallback);
+            }
+        });
+
+        btnGotoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/mall/login")
+                        .withString("userName", "guest")
+                        .navigation();
+            }
+        });
 
     }
 
@@ -81,15 +121,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    RouteCallback mRouteCallback = new RouteCallback() {
+    NavigationCallback mRouteCallback = new NavigationCallback() {
         @Override
-        public void succeed(Uri uri) {
+        public void onFound(Postcard postcard) {
+            customToast.showToast(getApplicationContext(), "MainActivity启动其他activity成功");
         }
 
         @Override
-        public void error(Uri uri, String message) {
-            Toast.makeText(MainActivity.this, String.format("uri:%s is error!", uri), Toast.LENGTH_LONG)
-                    .show();
+        public void onLost(Postcard postcard) {
+            customToast.showToast(getApplicationContext(), String.format("通过地址(%s)启动activity失败"
+                    , postcard.getPath()));
         }
     };
 }

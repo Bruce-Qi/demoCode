@@ -17,7 +17,7 @@ public class SchemeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Uri uri = getIntent().getData();
+        final Uri uri = getIntent().getData();
         ARouter.getInstance().build(uri).navigation(this, new NavigationCallback() {
             @Override
             public void onFound(Postcard postcard) {

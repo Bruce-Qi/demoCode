@@ -45,18 +45,25 @@
     />
 
     <Button
-            android:id="@+id/btnMainActivityGotoBaiDu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="跳转百度网页"
-    />
-    <Button
             android:id="@+id/btnMainActivityGotoHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="跳转Home"
+    />
+    <Button
+            android:id="@+id/btnMainActivityGotoOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="跳转订单列表页"
+    />
+    <Button
+            android:id="@+id/btnMainActivityGotoOrderDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="跳转订单详情页"
     />
     <Button
             android:id="@+id/btnMainActivityGotoGoodsDetail"

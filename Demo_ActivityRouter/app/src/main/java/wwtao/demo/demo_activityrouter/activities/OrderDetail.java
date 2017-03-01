@@ -6,16 +6,16 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import wwtao.demo.demo_activityrouter.R;
 
 /**
  * Created by wangweitao04 on 17/2/8.
  */
-@Route(path = "/mall/orderDetail")
+@Route(path = "/mall/order/orderDetail")
 public class OrderDetail extends AppCompatActivity {
     @Autowired(required = true)
     long detailId;
@@ -27,6 +27,7 @@ public class OrderDetail extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
+        ButterKnife.bind(this);
         tvOrderId.setText(String.valueOf(detailId));
     }
 }

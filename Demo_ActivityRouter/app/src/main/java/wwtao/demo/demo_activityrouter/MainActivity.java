@@ -1,30 +1,25 @@
 package wwtao.demo.demo_activityrouter;
 
 import com.alibaba.android.arouter.facade.Postcard;
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
 import wwtao.demo.demo_activityrouter.activities.GoodsDetail;
-import wwtao.demo.demo_activityrouter.activities.Orders;
 import wwtao.demo.demo_activityrouter.utils.CustomToast;
 
 
 public class MainActivity extends AppCompatActivity {
-    @Autowired(name = "/mall/utils/toast/normal")
+    //    @Autowired
     CustomToast customToast;
 
     @BindView(R.id.mainActivityEt)
@@ -36,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnGotoCustomActivity;
     @BindView(R.id.btnMainActivityGotoCustomActivityForResult)
     Button btnGotoCustomActivityForResult;
-    @BindView(R.id.btnMainActivityGotoBaiDu)
-    Button btnGotoBaiDu;
+    @BindView(R.id.btnMainActivityGotoOrder)
+    Button btnGotoOrder;
+    @BindView(R.id.btnMainActivityGotoOrderDetail)
+    Button btnGotoOrderDetail;
     @BindView(R.id.btnMainActivityGotoHome)
     Button btnGotoHome;
     @BindView(R.id.btnMainActivityGotoGoodsDetail)
@@ -50,64 +47,48 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        customToast = ((CustomToast) ARouter.getInstance().build("/mall/utils/toast/normal").navigation());
 
-        RxTextView.textChanges(etTargetAddress).subscribe(new Action1<CharSequence>() {
-            @Override
-            public void call(CharSequence charSequence) {
-                btnGotoCustomActivity.setText(String.format("start Activity: %s", etTargetAddress.getText()
-                        .toString()));
-                btnGotoCustomActivityForResult.setText(String.format("start Activity for result: %s"
-                        , etTargetAddress.getText().toString()));
+        RxTextView.textChanges(etTargetAddress).subscribe(charSequence -> {
+            btnGotoCustomActivity.setText(String.format("start Activity: %s", etTargetAddress.getText()
+                    .toString()));
+            btnGotoCustomActivityForResult.setText(String.format("start Activity for result: %s"
+                    , etTargetAddress.getText().toString()));
 
+        });
+        btnGotoCustomActivity.setOnClickListener(v -> {
+            try {
+                ARouter.getInstance().build(etTargetAddress.getText().toString()).navigation();
+            } catch (Exception e) {
+                customToast.showToast(String.format("启动activity失败:%s", e.getMessage()));
             }
         });
-        btnGotoCustomActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build(etTargetAddress.getText().toString()).navigation();
-            }
-        });
 
-        btnGotoCustomActivityForResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnGotoCustomActivityForResult.setOnClickListener(v -> {
+            try {
                 ARouter.getInstance().build(etTargetAddress.getText().toString())
-                        .navigation(MainActivity.this, Integer.valueOf(etRequestCode.getText().toString()),
-                                mRouteCallback);
+                        .navigation(MainActivity.this, Integer.valueOf(etRequestCode.getText().toString()));
+            } catch (Exception e) {
+                customToast.showToast(String.format("启动activity失败:%s", e.getMessage()));
             }
         });
 
-        btnGotoBaiDu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build("http://www.baidu.com").navigation();
-            }
-        });
+        btnGotoOrder.setOnClickListener(v -> ARouter.getInstance().build("/mall/order").navigation(MainActivity.this
+                , mRouteCallback));
 
-        btnGotoHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build("/mall/home").withString("modelName", "goodsList").navigation();
-            }
-        });
+        btnGotoOrderDetail.setOnClickListener(v -> ARouter.getInstance().build("/mall/order/orderDetail")
+                .navigation(MainActivity.this, mRouteCallback));
 
-        btnGotoGoodsDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build("/mall/goodsDetail")
-                        .navigation(MainActivity.this, GoodsDetail.OPEN_SOURCE_MAIN, mRouteCallback);
-            }
-        });
+        btnGotoHome.setOnClickListener(v -> ARouter.getInstance().build("/mall/home").withString("modelName",
+                "goodsList").navigation());
 
-        btnGotoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build("/mall/login")
-                        .withString("userName", "guest")
-                        .navigation();
-            }
-        });
+        btnGotoGoodsDetail.setOnClickListener(v -> ARouter.getInstance().build("/mall/goodsDetail")
+                .withString("csuId", "10001")
+                .navigation(MainActivity.this, GoodsDetail.OPEN_SOURCE_MAIN/*, mRouteCallback*/));
+
+        btnGotoLogin.setOnClickListener(v -> ARouter.getInstance().build("/mall/login")
+                .withString("userName", "guest")
+                .navigation());
 
     }
 
@@ -124,13 +105,23 @@ public class MainActivity extends AppCompatActivity {
     NavigationCallback mRouteCallback = new NavigationCallback() {
         @Override
         public void onFound(Postcard postcard) {
-            customToast.showToast(getApplicationContext(), "MainActivity启动其他activity成功");
+//            TestInject.getInstance().customToast.showToast("MainActivity启动其他activity成功");
+
+//            customToast.showToast("MainActivity启动其他activity成功");
+
+
+            customToast.showToast("MainActivity启动其他activity成功");
+
+//            Toast.makeText(MainActivity.this, "MainActivity启动其他activity成功", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onLost(Postcard postcard) {
-            customToast.showToast(getApplicationContext(), String.format("通过地址(%s)启动activity失败"
-                    , postcard.getPath()));
+            ARouter.getInstance().navigation(CustomToast.class)
+                    .showToast(String.format("通过地址(%s)或uri(%s)启动activity失败"
+                            , postcard.getPath(), postcard.getUri().toString()));
+//            Toast.makeText(MainActivity.this, String.format("通过地址(%s)或uri(%s)启动activity失败"
+//                    , postcard.getPath(), postcard.getUri().toString()), Toast.LENGTH_LONG).show();
         }
     };
 }

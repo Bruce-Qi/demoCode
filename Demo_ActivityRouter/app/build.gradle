@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'me.tatarka.retrolambda'
-//apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 //apply plugin: 'com.chenenyu.router'
 
 android {
@@ -14,11 +14,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
-            }
-        }
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [ moduleName : project.getName() ]
+//            }
+//        }
     }
     buildTypes {
         release {
@@ -27,22 +27,22 @@ android {
         }
     }
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
-
-        compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_6
+//        targetCompatibility JavaVersion.VERSION_1_6
+//    }
 }
 
-//apt {
-//    arguments {
-//        moduleName project.getName();
-//    }
-//}
+apt {
+    arguments {
+        moduleName project.getName();
+    }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -62,15 +62,16 @@ dependencies {
     //    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar'
 
     // view inject
-//    compile "com.jakewharton:butterknife:${butterknifeVer}"
-//    apt "com.jakewharton:butterknife-compiler:${butterknifeVer}"
     compile "com.jakewharton:butterknife:${butterknifeVer}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVer}"
+    apt "com.jakewharton:butterknife-compiler:${butterknifeVer}"
+//    compile "com.jakewharton:butterknife:${butterknifeVer}"
+//    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVer}"
 
     //Alibaba Router
-//    compile "com.alibaba:arouter-api:1.0.6"
-//    apt "com.alibaba:arouter-compiler:1.0.1"
-    compile "com.alibaba:arouter-api:1.0.6"
+    compile "com.alibaba:arouter-api:1.0.5"
     compile "com.alibaba:arouter-annotation:1.0.1"
-    annotationProcessor "com.alibaba:arouter-compiler:1.0.1"
+    apt "com.alibaba:arouter-compiler:1.0.1"
+//    compile "com.alibaba:arouter-api:1.0.5"
+//    compile "com.alibaba:arouter-annotation:1.0.1"
+//    annotationProcessor "com.alibaba:arouter-compiler:1.0.1"
 }

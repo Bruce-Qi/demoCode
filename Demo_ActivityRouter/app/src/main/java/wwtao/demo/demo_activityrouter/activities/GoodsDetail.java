@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import wwtao.demo.demo_activityrouter.R;
 
 /**
@@ -30,6 +31,7 @@ public class GoodsDetail extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
+        ButterKnife.bind(this);
         tvCusId.setText(String.valueOf(csuId));
     }
 }

@@ -3,10 +3,13 @@ package wwtao.demo.demo_activityrouter.activities;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -19,27 +22,33 @@ import wwtao.demo.demo_activityrouter.R;
 @Route(path = "/mall/error")
 public class Error extends AppCompatActivity {
     @Autowired
-    String url;
+    String errorInfo;
 
     @Autowired
-    Long time;
+    String action;
 
-    @BindView(R.id.tvSplashUri)
-    TextView tvName;
+    @BindView(R.id.tvErrorInfo)
+    TextView tvInfo;
 
-    @BindView(R.id.tvSplashContinueTime)
-    TextView tvContinueTime;
+    @BindView(R.id.btnErrorAction)
+    Button btnAction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        ARouter.getInstance().inject(this);
+        setContentView(R.layout.activity_error);
         ButterKnife.bind(this);
-        if (url != null) {
-            tvName.setText(url);
+
+        if (errorInfo != null && !"".equals(errorInfo)) {
+            tvInfo.setText(errorInfo);
         }
-        if (time != null) {
-            tvContinueTime.setText(String.valueOf(time));
+
+        if (action != null && !"".equals(action)) {
+            btnAction.setVisibility(View.VISIBLE);
+            btnAction.setText(action);
+        } else {
+            btnAction.setVisibility(View.GONE);
         }
     }
 

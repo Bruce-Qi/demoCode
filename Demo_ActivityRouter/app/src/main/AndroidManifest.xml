@@ -38,7 +38,7 @@
         <activity android:name=".activities.Home"/>
         <activity android:name=".activities.Login"/>
         <activity android:name=".activities.OrderDetail"/>
-        <activity android:name=".activities.Orders"/>
+        <activity android:name=".activities.OrderList"/>
 
     </application>
 

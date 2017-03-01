@@ -68,10 +68,15 @@ dependencies {
 //    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVer}"
 
     //Alibaba Router
-    compile "com.alibaba:arouter-api:1.0.5"
+    compile "com.alibaba:arouter-api:1.0.6"
     compile "com.alibaba:arouter-annotation:1.0.1"
-    apt "com.alibaba:arouter-compiler:1.0.1"
-//    compile "com.alibaba:arouter-api:1.0.5"
+    apt "com.alibaba:arouter-compiler:1.0.2"
+//    compile "com.alibaba:arouter-api:1.0.6"
 //    compile "com.alibaba:arouter-annotation:1.0.1"
-//    annotationProcessor "com.alibaba:arouter-compiler:1.0.1"
+//    annotationProcessor "com.alibaba:arouter-compiler:1.0.2"
+
+    //guava
+    compile "com.google.guava:guava:${guavaVer}"
+
+    compile "com.android.support:recyclerview-v7:${supportVer}"
 }

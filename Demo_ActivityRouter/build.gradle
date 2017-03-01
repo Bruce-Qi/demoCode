@@ -10,8 +10,9 @@ buildscript {
 
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
-//        classpath 'com.chenenyu.router:gradle-plugin:latest.integration'
         classpath 'me.tatarka:gradle-retrolambda:3.1.0'
+
+        classpath 'com.google.guava:guava:19.0'
     }
 }
 
@@ -37,4 +38,9 @@ ext {
     //activity router
     routerVersion = "0.5.0"
     compilerVersion = "0.2.0"
+
+    //guava
+    guavaVer = "19.0"
+
+    supportVer = "24.2.1"
 }

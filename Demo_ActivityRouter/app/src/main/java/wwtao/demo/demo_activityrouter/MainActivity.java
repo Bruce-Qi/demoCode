@@ -1,6 +1,7 @@
 package wwtao.demo.demo_activityrouter;
 
 import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -15,11 +16,12 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import wwtao.demo.demo_activityrouter.activities.GoodsDetail;
+import wwtao.demo.demo_activityrouter.activities.Home;
 import wwtao.demo.demo_activityrouter.utils.CustomToast;
 
 
 public class MainActivity extends AppCompatActivity {
-    //    @Autowired
+    @Autowired(name = "/mall/utils/toast/normal")
     CustomToast customToast;
 
     @BindView(R.id.mainActivityEt)
@@ -47,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        customToast = ((CustomToast) ARouter.getInstance().build("/mall/utils/toast/normal").navigation());
+        ARouter.getInstance().inject(this);
+//        customToast = ((CustomToast) ARouter.getInstance().build("/mall/utils/toast/normal").navigation());
 
         RxTextView.textChanges(etTargetAddress).subscribe(charSequence -> {
             btnGotoCustomActivity.setText(String.format("start Activity: %s", etTargetAddress.getText()
@@ -58,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         });
         btnGotoCustomActivity.setOnClickListener(v -> {
             try {
-                ARouter.getInstance().build(etTargetAddress.getText().toString()).navigation();
+                ARouter.getInstance().build(etTargetAddress.getText().toString())
+                        .navigation(MainActivity.this, mRouteCallback);
             } catch (Exception e) {
+                e.printStackTrace();
                 customToast.showToast(String.format("启动activity失败:%s", e.getMessage()));
             }
         });
@@ -67,28 +72,27 @@ public class MainActivity extends AppCompatActivity {
         btnGotoCustomActivityForResult.setOnClickListener(v -> {
             try {
                 ARouter.getInstance().build(etTargetAddress.getText().toString())
-                        .navigation(MainActivity.this, Integer.valueOf(etRequestCode.getText().toString()));
+                        .navigation(MainActivity.this, Integer.valueOf(etRequestCode.getText().toString())
+                                , mRouteCallback);
             } catch (Exception e) {
                 customToast.showToast(String.format("启动activity失败:%s", e.getMessage()));
             }
         });
 
-        btnGotoOrder.setOnClickListener(v -> ARouter.getInstance().build("/mall/order").navigation(MainActivity.this
-                , mRouteCallback));
+        btnGotoOrder.setOnClickListener(v -> ARouter.getInstance().build("/mall/order/list")
+                .navigation());
 
         btnGotoOrderDetail.setOnClickListener(v -> ARouter.getInstance().build("/mall/order/orderDetail")
-                .navigation(MainActivity.this, mRouteCallback));
+                .withLong("detailId", 20001).navigation());
 
-        btnGotoHome.setOnClickListener(v -> ARouter.getInstance().build("/mall/home").withString("modelName",
-                "goodsList").navigation());
+        btnGotoHome.setOnClickListener(v -> ARouter.getInstance().build("/mall/home")
+                .withInt("model", Home.SHOPPING_CART).navigation());
 
         btnGotoGoodsDetail.setOnClickListener(v -> ARouter.getInstance().build("/mall/goodsDetail")
-                .withString("csuId", "10001")
-                .navigation(MainActivity.this, GoodsDetail.OPEN_SOURCE_MAIN/*, mRouteCallback*/));
+                .withLong("csuId", 1001).withString("goodsName", "测试商品").navigation());
 
         btnGotoLogin.setOnClickListener(v -> ARouter.getInstance().build("/mall/login")
-                .withString("userName", "guest")
-                .navigation());
+                .withString("userName", "guest").navigation());
 
     }
 
@@ -105,23 +109,12 @@ public class MainActivity extends AppCompatActivity {
     NavigationCallback mRouteCallback = new NavigationCallback() {
         @Override
         public void onFound(Postcard postcard) {
-//            TestInject.getInstance().customToast.showToast("MainActivity启动其他activity成功");
-
-//            customToast.showToast("MainActivity启动其他activity成功");
-
-
             customToast.showToast("MainActivity启动其他activity成功");
-
-//            Toast.makeText(MainActivity.this, "MainActivity启动其他activity成功", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onLost(Postcard postcard) {
-            ARouter.getInstance().navigation(CustomToast.class)
-                    .showToast(String.format("通过地址(%s)或uri(%s)启动activity失败"
-                            , postcard.getPath(), postcard.getUri().toString()));
-//            Toast.makeText(MainActivity.this, String.format("通过地址(%s)或uri(%s)启动activity失败"
-//                    , postcard.getPath(), postcard.getUri().toString()), Toast.LENGTH_LONG).show();
+            customToast.showToast(String.format("通过地址或uri启动activity失败,请检查地址是否正确!"));
         }
     };
 }

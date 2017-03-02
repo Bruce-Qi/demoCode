@@ -19,10 +19,10 @@ import wwtao.demo.demo_activityrouter.R;
  */
 @Route(path = "/mall/goodsDetail")
 public class GoodsDetail extends AppCompatActivity {
-    @Autowired
+    @Autowired(name = "csuId")
     Long csuId;
 
-    @Autowired
+    @Autowired(name = "goodsName")
     String goodsName;
 
     @BindView(R.id.tvGoodsDetailCsuId)

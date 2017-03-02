@@ -25,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
     @Autowired(name = "/mall/utils/toast/normal")
     CustomToast customToast;
 
-    @BindView(R.id.mainActivityEt)
+    @BindView(R.id.btnMainActivityOpenWebview)
+    Button btnOpenWebView;
+    @BindView(R.id.etMainActivityPath)
     EditText etTargetAddress;
-    @BindView(R.id.mainActivityEtRequestCode)
+    @BindView(R.id.etMainActivityRequestCode)
     EditText etRequestCode;
 
     @BindView(R.id.btnMainActivityGotoCustomActivity)
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
 //        customToast = ((CustomToast) ARouter.getInstance().build("/mall/utils/toast/normal").navigation());
+
+        btnOpenWebView.setOnClickListener(v -> ARouter.getInstance().build("/mall/webview")
+                .withString("url", "file:///android_asset/scheme-mall.html").navigation());
 
         RxTextView.textChanges(etTargetAddress).subscribe(charSequence -> {
             btnGotoCustomActivity.setText(String.format("start Activity: %s", etTargetAddress.getText()

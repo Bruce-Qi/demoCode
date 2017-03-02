@@ -24,7 +24,7 @@ public class Home extends AppCompatActivity {
     public static final int SHOPPING_CART = 102;
     public static final int USERS = 103;
 
-    @Autowired
+    @Autowired(name = "model")
     Integer model = GOODS_LIST;
 
     @BindView(R.id.tvHomeModelName)

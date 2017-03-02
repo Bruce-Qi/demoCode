@@ -7,20 +7,38 @@
         android:gravity="center"
 >
 
-    <TextView
-            android:id="@+id/tvErrorInfo"
+    <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-    />
+            android:padding="50dp"
+            android:background="#ffffff"
+    >
+        <TextView
+                android:id="@+id/tvADialogInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+        />
 
-    <Button
-            android:id="@+id/btnErrorAction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"
-    />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+        >
+
+            <Button
+                    android:id="@+id/btnADialogConfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+            />
+        </LinearLayout>
+    </FrameLayout>
 
 
 </LinearLayout>

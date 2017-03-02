@@ -49,16 +49,16 @@ public class Home extends AppCompatActivity {
 
     private void initUI() {
         btnHomeGoodsList.setOnClickListener(v -> {
-            model = GOODS_LIST;
-            showContent();
+            ARouter.getInstance().build("/mall/home").withInt("model", GOODS_LIST).navigation();
+            finish();
         });
         btnHomeShoppingCart.setOnClickListener(v -> {
-            model = SHOPPING_CART;
-            showContent();
+            ARouter.getInstance().build("/mall/home").withInt("model", SHOPPING_CART).navigation();
+            finish();
         });
         btnHomeUser.setOnClickListener(v -> {
-            model = USERS;
-            showContent();
+            ARouter.getInstance().build("/mall/home").withInt("model", USERS).navigation();
+            finish();
         });
     }
 

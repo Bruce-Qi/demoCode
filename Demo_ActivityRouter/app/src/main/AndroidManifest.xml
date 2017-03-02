@@ -26,19 +26,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.Error"/>
         <activity android:name=".activities.GoodsDetail"/>
         <activity android:name=".activities.Home"/>
         <activity android:name=".activities.Login"/>
         <activity android:name=".activities.OrderDetail"/>
         <activity android:name=".activities.OrderList"/>
+        <activity android:name=".activities.ADialog" android:theme="@style/ActivityDialogTheme"/>
 
     </application>
 

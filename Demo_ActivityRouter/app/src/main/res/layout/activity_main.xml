@@ -44,13 +44,38 @@
             android:layout_height="wrap_content"
     />
 
-    <Button
-            android:id="@+id/btnMainActivityGotoHome"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="跳转Home"
-    />
+            android:orientation="horizontal"
+    >
+        <Button
+                android:id="@+id/btnMainActivityGotoHomeGoodsList"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="跳转Home的商品列表"
+        />
+
+        <Button
+                android:id="@+id/btnMainActivityGotoHomeShoppingCart"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="跳转Home的购物车"
+        />
+
+        <Button
+                android:id="@+id/btnMainActivityGotoHomeUser"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="跳转Home的用户中心"
+        />
+    </LinearLayout>
     <Button
             android:id="@+id/btnMainActivityGotoOrder"
             android:layout_width="match_parent"
@@ -58,20 +83,68 @@
             android:layout_gravity="center_horizontal"
             android:text="跳转订单列表页"
     />
-    <Button
-            android:id="@+id/btnMainActivityGotoOrderDetail"
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="orderId:"
+        />
+        <EditText
+                android:id="@+id/etMainActivityOrderId"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="number"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+        />
+        <Button
+                android:id="@+id/btnMainActivityGotoOrderDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="跳转订单详情页"
+        />
+    </LinearLayout>
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="跳转订单详情页"
-    />
-    <Button
-            android:id="@+id/btnMainActivityGotoGoodsDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="跳转商品详情"
-    />
+            android:orientation="horizontal"
+            android:gravity="center"
+    >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="csuId:"
+        />
+        <EditText
+                android:id="@+id/etMainActivityCsuId"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="number"
+        />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="goodsName:"
+                android:layout_marginLeft="30dp"
+        />
+        <EditText
+                android:id="@+id/etMainActivityGoodsName"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+        />
+        <Button
+                android:id="@+id/btnMainActivityGotoGoodsDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="跳转商品详情"
+        />
+    </LinearLayout>
 
     <Button
             android:id="@+id/btnMainActivityGotoLogin"

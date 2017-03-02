@@ -18,6 +18,27 @@
                 android:gravity="center"
                 android:textSize="16sp"
         />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+        >
+            <Button
+                    android:id="@+id/btnLoginLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="注销"
+            />
+
+            <Button
+                    android:id="@+id/btnLoginReturn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="返回"
+            />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

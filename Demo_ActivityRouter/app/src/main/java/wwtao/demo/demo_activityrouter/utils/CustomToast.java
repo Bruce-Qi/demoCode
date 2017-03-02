@@ -9,5 +9,5 @@ import android.content.Context;
  */
 
 public interface CustomToast extends IProvider {
-    void showToast(String content);
+    void showDefaultStyleToast(String content);
 }

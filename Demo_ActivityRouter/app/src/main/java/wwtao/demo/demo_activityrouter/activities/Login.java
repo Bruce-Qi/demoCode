@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import wwtao.demo.demo_activityrouter.Config;
 import wwtao.demo.demo_activityrouter.R;
 import wwtao.demo.demo_activityrouter.utils.CustomToast;
 
@@ -24,10 +25,10 @@ import wwtao.demo.demo_activityrouter.utils.CustomToast;
  */
 @Route(path = "/mall/login")
 public class Login extends AppCompatActivity {
-    @Autowired
-    Boolean isLogin = false;
-    @Autowired
-    String userName;
+    //    @Autowired
+//    Boolean isLogin = false;
+//    @Autowired
+//    String userName;
     @Autowired(name = "/mall/utils/toast/normal")
     CustomToast customToast;
 
@@ -35,6 +36,10 @@ public class Login extends AppCompatActivity {
     View layoutLoginState;
     @BindView(R.id.tvLoginState)
     TextView tvLoginState;
+    @BindView(R.id.btnLoginLogout)
+    Button btnLoginLogout;
+    @BindView(R.id.btnLoginReturn)
+    Button btnLoginReturn;
     @BindView(R.id.layoutLoginLogin)
     View layoutLogin;
     @BindView(R.id.etLoginUserName)
@@ -55,17 +60,17 @@ public class Login extends AppCompatActivity {
         btnStartLogin.setOnClickListener(v -> {
             if (!Strings.isNullOrEmpty(etUserName.getText().toString())
                     && !Strings.isNullOrEmpty(etUserPassword.getText().toString())) {
-                userName = etUserName.getText().toString();
-                isLogin = true;
+                Config.userName = etUserName.getText().toString();
+                Config.isLogin = true;
                 checkIsLogin();
             } else {
-                customToast.showToast("用户名或密码为空!");
+                customToast.showDefaultStyleToast("用户名或密码为空!");
             }
         });
     }
 
     private void checkIsLogin() {
-        if (isLogin) {
+        if (Config.isLogin) {
             showLoginState();
         } else {
             showLogin();
@@ -76,15 +81,20 @@ public class Login extends AppCompatActivity {
         layoutLoginState.setVisibility(View.VISIBLE);
         layoutLogin.setVisibility(View.GONE);
 
-        tvLoginState.setText(String.format("你已经登录,用户名为:%s", userName));
+        tvLoginState.setText(String.format("你已经登录,用户名为:%s", Config.userName));
+        btnLoginLogout.setOnClickListener(v -> {
+            Config.isLogin = false;
+            checkIsLogin();
+        });
+        btnLoginReturn.setOnClickListener(v -> finish());
     }
 
     private void showLogin() {
         layoutLogin.setVisibility(View.VISIBLE);
         layoutLoginState.setVisibility(View.GONE);
 
-        if (!Strings.isNullOrEmpty(userName)) {
-            etUserName.setText(userName);
+        if (!Strings.isNullOrEmpty(Config.userName)) {
+            etUserName.setText(Config.userName);
         } else {
             etUserName.setHint("请输入用户名");
         }

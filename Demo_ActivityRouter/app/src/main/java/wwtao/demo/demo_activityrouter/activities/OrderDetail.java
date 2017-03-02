@@ -18,7 +18,7 @@ import wwtao.demo.demo_activityrouter.R;
  */
 @Route(path = "/mall/order/orderDetail")
 public class OrderDetail extends AppCompatActivity {
-    @Autowired(required = true)
+    @Autowired
     long detailId;
 
     @BindView(R.id.tvOrderDetailOrderId)

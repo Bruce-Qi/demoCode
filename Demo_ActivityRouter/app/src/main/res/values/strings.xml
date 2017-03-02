@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Demo_ActivityRouter</string>
+    <string name="routerPathOrderList">/mall/order/list</string>
+    <string name="routerPathOrderDetail">/mall/order/orderDetail</string>
+    <string name="routerPathHome">/mall/home</string>
+    <string name="routerPathGoodsDetail">/mall/goodsDetail</string>
+    <string name="routerPathLogin">/mall/login</string>
 </resources>

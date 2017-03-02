@@ -13,7 +13,7 @@ public class NormalToast implements CustomToast {
     private Context context = null;
 
     @Override
-    public void showToast(String content) {
+    public void showDefaultStyleToast(String content) {
         if (context != null) {
             Toast.makeText(context, content, Toast.LENGTH_LONG).show();
         }

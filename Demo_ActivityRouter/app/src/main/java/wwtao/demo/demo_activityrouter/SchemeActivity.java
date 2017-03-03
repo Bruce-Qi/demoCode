@@ -21,15 +21,11 @@ public class SchemeActivity extends AppCompatActivity {
         ARouter.getInstance().build(uri).navigation(this, new NavigationCallback() {
             @Override
             public void onFound(Postcard postcard) {
-//                Toast.makeText(getApplicationContext(), String.format("由%s启动Activity成功", uri.toString())
-//                        , Toast.LENGTH_LONG).show();
                 finish();
             }
 
             @Override
             public void onLost(Postcard postcard) {
-//                Toast.makeText(getApplicationContext(), String.format("找不到%s对应的Activity", uri.toString())
-//                        , Toast.LENGTH_LONG).show();
                 finish();
             }
         });
